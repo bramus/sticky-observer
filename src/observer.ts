@@ -16,14 +16,14 @@ export class StickyObserver extends EventTarget {
   private sentinels: WeakMap<Element, HTMLElement>;
   private stateMap: WeakMap<HTMLElement, StickyState>;
   private debug: boolean;
-  private keepStickyAtBottom: boolean;
+  private remainStickyBeyondStickyEdge: boolean;
 
   constructor() {
     super();
     this.sentinels = new WeakMap();
     this.stateMap = new WeakMap();
     this.debug = false;
-    this.keepStickyAtBottom = false;
+    this.remainStickyBeyondStickyEdge = false;
   }
 
   /**
@@ -37,7 +37,7 @@ export class StickyObserver extends EventTarget {
   ): StickyObserver {
     const instance = new StickyObserver();
     instance.debug = options.debug || false;
-    instance.keepStickyAtBottom = options.keepStickyAtBottom || false;
+    instance.remainStickyBeyondStickyEdge = options.remainStickyBeyondStickyEdge || false;
     instance._init(selector, options.container);
     return instance;
   }
@@ -146,7 +146,7 @@ export class StickyObserver extends EventTarget {
 
   private _reconcile(target: HTMLElement, state: StickyState): void {
     const isStuck =
-      state.topStuck && (this.keepStickyAtBottom || state.bottomStuck);
+      state.topStuck && (this.remainStickyBeyondStickyEdge || state.bottomStuck);
 
     if (isStuck !== state.isStuck) {
       state.isStuck = isStuck;

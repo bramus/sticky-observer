@@ -9,7 +9,7 @@ export interface StickyObserverOptions {
    * If true, the element remains stuck even when the bottom of the container
    * scrolls past the viewport. It only unsticks when scrolling back up to the top.
    */
-  keepStickyAtBottom?: boolean;
+  remainStickyBeyondStickyEdge?: boolean;
 }
 
 export interface StickyChangeDetail {

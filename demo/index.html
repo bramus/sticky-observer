@@ -182,7 +182,7 @@
             <div class="section">
                 <h2 class="sticky-header">4. Conclusion</h2>
                 <div class="content">
-                    <p>Final section. When the bottom of this section passes the viewport top, this header will also unstick (unless <code>keepStickyAtBottom</code> is true).</p>
+                    <p>Final section. When the bottom of this section passes the viewport top, this header will also unstick (unless <code>remainStickyBeyondStickyEdge</code> is true).</p>
                     <p>End of content.</p>
                     <div style="height: 300px; background: #9ca3af; margin: 10px 0; border-radius: 4px;"></div>
                 </div>
@@ -210,7 +210,7 @@
         const observer = StickyObserver.observe('.sticky-header', { 
             container: document.getElementById('scroller'), 
             debug: true, // Set to false to hide the red/green boxes
-            keepStickyAtBottom: false
+            remainStickyBeyondStickyEdge: false
         });
 
         observer.addEventListener('sticky-change', (e) => {
