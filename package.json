@@ -1,0 +1,29 @@
+{
+  "name": "sticky-observer",
+  "version": "1.0.0",
+  "description": "A simple utility to observe the sticky state of elements.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=esm --target=es6 && tsc --emitDeclarationOnly --outDir dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "sticky",
+    "observer",
+    "intersectionobserver"
+  ],
+  "author": {
+    "name": "Bramus Van Damme",
+    "email": "bramus@bram.us",
+    "web": "https://www.bram.us/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "esbuild": "^0.19.0"
+  }
+}

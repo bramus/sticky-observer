@@ -1,0 +1,8 @@
+# Source files
+/src
+
+# TS Config
+tsconfig.json
+
+# Dependencies
+/node_modules
