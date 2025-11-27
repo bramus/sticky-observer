@@ -7,7 +7,7 @@ export function createSentinel(
 
   const style: Partial<CSSStyleDeclaration> = {
     position: "absolute",
-    height: "10px",
+    height: "1px",
     left: "0",
     right: "0",
     pointerEvents: "none",
@@ -25,13 +25,13 @@ export function createSentinel(
       visibility: "visible",
       zIndex: "9999",
       opacity: "0.5",
-      backgroundColor: type === "top" ? "green" : "red",
-      border: "1px solid black",
+      color: type === "top" ? "green" : "red",
+      backgroundColor: "currentcolor",
+      outline: "5px solid currentcolor",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       fontSize: "10px",
-      color: "white",
       fontWeight: "bold",
     });
     sentinel.textContent = type.toUpperCase();
