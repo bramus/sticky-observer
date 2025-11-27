@@ -1,5 +1,9 @@
-import { createSentinel } from './sentinel';
-import { StickyObserverOptions, StickyChangeDetail, StickyState } from './types';
+import { createSentinel } from "./sentinel";
+import {
+  StickyObserverOptions,
+  StickyChangeDetail,
+  StickyState,
+} from "./types";
 
 /**
  * StickyObserver
@@ -27,7 +31,10 @@ export class StickyObserver extends EventTarget {
    * @param selector - The CSS selector to observe.
    * @param options - Configuration object.
    */
-  static observe(selector: string, options: StickyObserverOptions = {}): StickyObserver {
+  static observe(
+    selector: string,
+    options: StickyObserverOptions = {},
+  ): StickyObserver {
     const instance = new StickyObserver();
     instance.debug = options.debug || false;
     instance.keepStickyAtBottom = options.keepStickyAtBottom || false;
@@ -41,12 +48,12 @@ export class StickyObserver extends EventTarget {
     // 1. Setup Observers
     this.headerObserver = new IntersectionObserver(
       (entries) => this._handleHeaderIntersect(entries),
-      { threshold: [0], root: rootContainer || null }
+      { threshold: [0], root: rootContainer || null },
     );
 
     this.footerObserver = new IntersectionObserver(
       (entries) => this._handleFooterIntersect(entries),
-      { threshold: [1], root: rootContainer || null }
+      { threshold: [1], root: rootContainer || null },
     );
 
     targets.forEach((target) => {
@@ -54,23 +61,23 @@ export class StickyObserver extends EventTarget {
       if (!parent) return;
 
       const parentStyle = getComputedStyle(parent);
-      if (parentStyle.position !== 'relative') {
+      if (parentStyle.position !== "relative") {
         console.warn(
           `[StickyObserver] Warning: The parent element of the sticky target is statically positioned. ` +
-          `Sticky sentinels require a positioned parent. Automatically setting 'position: relative' on:`,
-          parent
+            `Sticky sentinels require a positioned parent. Automatically setting 'position: relative' on:`,
+          parent,
         );
-        parent.style.position = 'relative';
+        parent.style.position = "relative";
       }
 
       this.stateMap.set(target, {
         topStuck: false,
         bottomStuck: true,
-        isStuck: false
+        isStuck: false,
       });
 
-      const topSentinel = createSentinel('top', this.debug);
-      const bottomSentinel = createSentinel('bottom', this.debug);
+      const topSentinel = createSentinel("top", this.debug);
+      const bottomSentinel = createSentinel("bottom", this.debug);
 
       parent.insertBefore(topSentinel, parent.firstChild);
       parent.appendChild(bottomSentinel);
@@ -82,14 +89,14 @@ export class StickyObserver extends EventTarget {
       this.footerObserver!.observe(bottomSentinel);
 
       if (this.debug) {
-        target.style.outline = '3px dashed blue';
-        target.setAttribute('data-sticky-subject', 'true');
+        target.style.outline = "3px dashed blue";
+        target.setAttribute("data-sticky-subject", "true");
       }
     });
   }
 
   private _handleHeaderIntersect(entries: IntersectionObserverEntry[]): void {
-    entries.forEach(record => {
+    entries.forEach((record) => {
       const target = this.sentinels.get(record.target);
       if (!target) return;
       const state = this.stateMap.get(target);
@@ -101,7 +108,10 @@ export class StickyObserver extends EventTarget {
 
       if (targetInfo.bottom < rootBoundsInfo.top) {
         state.topStuck = true;
-      } else if (targetInfo.bottom >= rootBoundsInfo.top && targetInfo.bottom < rootBoundsInfo.bottom) {
+      } else if (
+        targetInfo.bottom >= rootBoundsInfo.top &&
+        targetInfo.bottom < rootBoundsInfo.bottom
+      ) {
         state.topStuck = false;
       }
 
@@ -110,7 +120,7 @@ export class StickyObserver extends EventTarget {
   }
 
   private _handleFooterIntersect(entries: IntersectionObserverEntry[]): void {
-    entries.forEach(record => {
+    entries.forEach((record) => {
       const target = this.sentinels.get(record.target);
       if (!target) return;
       const state = this.stateMap.get(target);
@@ -123,7 +133,10 @@ export class StickyObserver extends EventTarget {
 
       if (targetInfo.bottom > rootBoundsInfo.top && ratio === 1) {
         state.bottomStuck = true;
-      } else if (targetInfo.top < rootBoundsInfo.top && targetInfo.bottom < rootBoundsInfo.bottom) {
+      } else if (
+        targetInfo.top < rootBoundsInfo.top &&
+        targetInfo.bottom < rootBoundsInfo.bottom
+      ) {
         state.bottomStuck = false;
       }
 
@@ -132,7 +145,8 @@ export class StickyObserver extends EventTarget {
   }
 
   private _reconcile(target: HTMLElement, state: StickyState): void {
-    const isStuck = state.topStuck && (this.keepStickyAtBottom || state.bottomStuck);
+    const isStuck =
+      state.topStuck && (this.keepStickyAtBottom || state.bottomStuck);
 
     if (isStuck !== state.isStuck) {
       state.isStuck = isStuck;
@@ -141,14 +155,14 @@ export class StickyObserver extends EventTarget {
   }
 
   private _fire(stuck: boolean, target: HTMLElement): void {
-    const event = new CustomEvent<StickyChangeDetail>('sticky-change', {
+    const event = new CustomEvent<StickyChangeDetail>("sticky-change", {
       detail: { target, stuck },
     });
     this.dispatchEvent(event);
-    target.classList.toggle('is-stuck', stuck);
+    target.classList.toggle("is-stuck", stuck);
 
     if (this.debug) {
-      console.log(`[StickyObserver] ${stuck ? 'STUCK' : 'UNSTUCK'}`, target);
+      console.log(`[StickyObserver] ${stuck ? "STUCK" : "UNSTUCK"}`, target);
     }
   }
 

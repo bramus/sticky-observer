@@ -5,6 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "lint": "prettier --check '{src,test,cli}/**/*.{ts,tsx,js,jsx,html,css}'",
+    "format": "prettier --write '{src,test,cli}/**/*.{ts,tsx,js,jsx,html,css}'",
     "clean": "rm -rf dist",
     "build": "npm run clean && esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=esm --target=es6 && tsc --emitDeclarationOnly --outDir dist"
   },
@@ -23,6 +25,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "prettier": "^3.3.3",
     "typescript": "^5.0.0",
     "esbuild": "^0.19.0"
   }
