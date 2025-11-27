@@ -5,11 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start": "npm run clean && esbuild src/index.ts --bundle --outfile=demo/sticky-observer.js --platform=browser --format=esm --target=es6 --watch --servedir=demo",
+    "start": "npm run clean && esbuild src/index.ts --sourcemap --bundle --outfile=demo/sticky-observer.js --platform=browser --format=esm --target=es6 --watch --servedir=demo",
     "lint": "prettier --check '{src,test,cli}/**/*.{ts,tsx,js,jsx,html,css}'",
     "format": "prettier --write '{src,test,cli}/**/*.{ts,tsx,js,jsx,html,css}'",
     "clean": "rm -rf dist",
-    "build": "npm run clean && esbuild src/index.ts --bundle --outfile=dist/index.js --platform=browser --format=esm --target=es6 && tsc --emitDeclarationOnly --outDir dist"
+    "build": "npm run clean && esbuild src/index.ts --sourcemap --bundle --outfile=dist/index.js --platform=browser --format=esm --target=es6 && tsc --emitDeclarationOnly --outDir dist"
   },
   "files": [
     "dist"
