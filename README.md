@@ -7,7 +7,7 @@ It implements [the "Sticky Events" pattern using sentinels and `IntersectionObse
 ## Installation
 
 ```bash
-npm install sticky-observer
+npm install @bramus/sticky-observer
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ npm install sticky-observer
 3. Listen for the `sticky-change` event on the observer instance.
 
 ```typescript
-import { StickyObserver } from 'sticky-observer';
+import { StickyObserver } from '@bramus/sticky-observer';
 
 // Initialize and observe elements matching the selector
 const observer = StickyObserver.observe('h2');

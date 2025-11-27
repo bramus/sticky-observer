@@ -1,5 +1,6 @@
 # Source files
 /src
+/demo
 
 # TS Config
 tsconfig.json

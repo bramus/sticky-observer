@@ -1,15 +1,18 @@
 {
-  "name": "sticky-observer",
+  "name": "@bramus/sticky-observer",
   "version": "1.0.0",
-  "description": "A simple utility to observe the sticky state of elements.",
-  "main": "dist/index.js",
+  "description": "Observe CSS `position: sticky` elements getting stuck or unstuck",
+  "type": "module",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "npm run clean && esbuild src/index.ts --sourcemap --bundle --outfile=demo/sticky-observer.js --platform=browser --format=esm --target=es6 --watch --servedir=demo",
     "lint": "prettier --check '{src,test,cli}/**/*.{ts,tsx,js,jsx,html,css}'",
     "format": "prettier --write '{src,test,cli}/**/*.{ts,tsx,js,jsx,html,css}'",
     "clean": "rm -rf dist",
-    "build": "npm run clean && esbuild src/index.ts --sourcemap --bundle --outfile=dist/index.js --platform=browser --format=esm --target=es6 && tsc --emitDeclarationOnly --outDir dist"
+    "build": "npm run clean && esbuild src/index.ts --sourcemap --bundle --outfile=dist/index.js --platform=browser --format=esm --target=es6 && tsc --emitDeclarationOnly --outDir dist",
+    "prepack": "npm run prevent-dirty-tree && npm run build",
+    "prevent-dirty-tree": "exit $(git status --porcelain | wc -l)"
   },
   "files": [
     "dist"
